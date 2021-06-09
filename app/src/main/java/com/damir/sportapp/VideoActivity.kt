@@ -3,11 +3,13 @@ package com.damir.sportapp
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.view.MenuItem
 import android.widget.MediaController
 import android.widget.TextView
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.damir.sportapp.data.models.FeedView
+import kotlinx.android.synthetic.main.activity_video.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -19,35 +21,31 @@ class VideoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video)
 
+        val actionBar = supportActionBar
+        actionBar!!.title = "Video"
+        actionBar.setDisplayHomeAsUpEnabled(true)
+        init()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+
+    private fun init(){
         val feedView : FeedView = intent.extras!!.get("FeedView") as FeedView
 
-        val videoView : VideoView = findViewById(R.id.videoView)
         //Creating MediaController
         val mediaController = MediaController(this)
         mediaController.setAnchorView(videoView)
 
-
-        val videoName : TextView = findViewById(R.id.video_name)
-        val videoBio : TextView = findViewById(R.id.video_bio)
-        val videoDescription : TextView = findViewById(R.id.video_description)
-        val videoViews : TextView = findViewById(R.id.video_views)
-        val videoClub : TextView = findViewById(R.id.video_club)
-
-
-
-        videoName.text = "Name: " + feedView.athlete.name
-        videoBio.text = "Age : ${feedView.athlete.age} From: ${feedView.athlete.country.name}"
-        videoDescription.text = feedView.description
-        videoClub.text = feedView.athlete.club
-        videoViews.text ="Watched: ${feedView.views}"
-
-        //specify the location of media file
-        val uri: Uri = Uri.parse(feedView.video.url)
-        //Setting MediaController and URI, then starting the videoView
-        videoView.setMediaController(mediaController)
-        videoView.setVideoURI(uri)
-        videoView.requestFocus()
-        videoView.start()
+        video_name.text = "Name: " + feedView.athlete.name
+        video_bio.text = "Age : ${feedView.athlete.age} From: ${feedView.athlete.country.name}"
+        video_description.text = feedView.description
+        video_views.text = feedView.athlete.club
+        video_club.text ="Watched: ${feedView.views}"
+        videoView.videoUrl(feedView.video.url)
     }
 
     override fun onBackPressed() {

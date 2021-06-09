@@ -18,6 +18,8 @@ class MainPresenter(private val view : MainView){
 
 
 
+
+
     fun getFeed(){
         view.showSpinner()
         api.getFeed()
@@ -26,6 +28,7 @@ class MainPresenter(private val view : MainView){
                     call: Call<List<FeedView>>,
                     response: Response<List<FeedView>>
                 ) {
+
                     updateFeed(response.body()!!)
                     view.hideSpinner()
                 }

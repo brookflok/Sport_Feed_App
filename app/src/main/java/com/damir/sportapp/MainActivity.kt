@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.damir.sportapp.data.injection.component.DaggerTechnicalTaskAPIComponent
 import com.damir.sportapp.data.injection.module.TechnicalTaskApiModule
 import com.damir.sportapp.ui.MainView
@@ -17,14 +16,16 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private lateinit var feedRecycleAdapter: FeedRecycleAdapter
     private val presenter = MainPresenter(this)
-
     override fun onCreate(savedInstanceState: Bundle?) {
+
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         injectDI()
         getFeed()
     }
+
 
 
     private fun initRecycleView(){
